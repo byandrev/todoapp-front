@@ -5,10 +5,12 @@ import App from './App.jsx'
 import './index.css'
 import { UserProvider } from "./context/UserContext.jsx";
 
+import theme from './theme'
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserProvider>
-      <ChakraProvider>
+    <ChakraProvider theme={theme}>
         <App />
       </ChakraProvider>
     </UserProvider>

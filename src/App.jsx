@@ -1,10 +1,14 @@
-import {Button} from "@chakra-ui/react";
+import { Route, Switch } from 'wouter'
+
+import HomePage from './pages/Home'
 
 function App() {
 
   return (
     <>
-      <Button>Hola</Button>
+    <Switch>
+    <Route component={HomePage} path='/'/>
+    </Switch>
     </>
   )
 }
