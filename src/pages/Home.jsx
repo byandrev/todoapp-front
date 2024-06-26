@@ -1,9 +1,9 @@
-import { Button } from "@chakra-ui/react"
+import TaskList from "../components/TaskList"
 
 function Home() {
   return (
   <>
-    <Button>Hola Mundo</Button>
+    <TaskList></TaskList>
   </>
   )
 }
