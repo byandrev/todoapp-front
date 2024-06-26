@@ -6,9 +6,7 @@ import UpdatePhoto from "../components/UpdatePhoto";
 function Profile() {
   return (
     <>
-      <Center p={"5%"}>
-        <UpdatePhoto></UpdatePhoto>
-      </Center>
+      <Center p={"5%"}>{<ProfileCard></ProfileCard>}</Center>
     </>
   );
 }

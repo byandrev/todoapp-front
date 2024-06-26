@@ -1,8 +1,19 @@
-import { Box, Text, Image, Center } from "@chakra-ui/react";
-import { Button, ButtonGroup, Stack } from "@chakra-ui/react";
+import { Box, Text, Image, Modal, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  ModalOverlay,
+  Stack,
+  ModalContent,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 import "@fontsource/raleway";
+import UpdateBio from "./UpdateBio";
+import UpdatePhoto from "./UpdatePhoto";
 
 function ProfileCard() {
+  const modalBio = useDisclosure();
+  const modalPhoto = useDisclosure();
   return (
     <>
       <Box
@@ -58,14 +69,40 @@ function ProfileCard() {
           align="center"
           paddingTop={7}
         >
-          <Button colorScheme="red" variant="solid">
+          <Button colorScheme="red" variant="solid" onClick={modalPhoto.onOpen}>
             Update photo
           </Button>
-          <Button colorScheme="red" variant="solid">
+          <Button colorScheme="red" variant="solid" onClick={modalBio.onOpen}>
             Update bio
           </Button>
         </Stack>
       </Box>
+      <Modal
+        isOpen={modalBio.isOpen}
+        onOpen={modalBio.onOpen}
+        onClose={modalBio.onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            <UpdateBio></UpdateBio>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <Modal
+        isOpen={modalPhoto.isOpen}
+        onOpen={modalPhoto.onOpen}
+        onClose={modalPhoto.onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            <UpdatePhoto></UpdatePhoto>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

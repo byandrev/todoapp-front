@@ -1,18 +1,8 @@
-import { Box, Text, Button, Input, Image, Center } from "@chakra-ui/react";
+import { Box, Text, Button, Input, Image } from "@chakra-ui/react";
 
 function UpdatePhoto() {
   return (
-    <Box
-      bgColor={"white"}
-      w="30%"
-      h={"20rem"}
-      textAlign={"justify"}
-      display="flex"
-      flexDirection="column"
-      borderRadius={"md"}
-      border={"1px solid #e2e8f0"}
-      p={6}
-    >
+    <Box h={"20rem"}>
       <Text>New photo</Text>
 
       <Box
@@ -21,6 +11,9 @@ function UpdatePhoto() {
         marginY={5}
         display={"flex"}
         justifyContent={"center"}
+        _hover={{
+          border: "1px solid #3182ce",
+        }}
       >
         <Image
           src="src/assets/img/upload.png"
