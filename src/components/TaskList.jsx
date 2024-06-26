@@ -1,13 +1,21 @@
-import Task from './Task';
+import Task from "./Task"
+import TaskInput from "./TaskInput"
+import UserCard from "./UserCard"
 
-import { Stack } from '@chakra-ui/react'
+import { Stack, Flex } from "@chakra-ui/react"
 
 function TaskList() {
   return (
     <>
-      <Stack spacing={4} direction="row" align="center">
-        <Task></Task>
-      </Stack>
+      <Flex direction='column' gap={5}>
+        <UserCard></UserCard>
+        <TaskInput/>
+        <Stack spacing={4} direction="column" align="center">
+          <Task></Task>
+          <Task></Task>
+          <Task></Task>
+        </Stack>
+      </Flex>
     </>
   );
 }
