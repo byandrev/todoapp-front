@@ -1,6 +1,6 @@
-import useUser from "./useUser.js";
+import useUser from "../../../hooks/useUser.js";
 import {useMutation} from "react-query";
-import * as UserService from "../services/UserService.js";
+import * as UserService from "../../../services/UserService.js";
 import {useLocation} from "wouter";
 import {useToast} from "@chakra-ui/react";
 import {useState} from "react";

@@ -15,6 +15,30 @@ async function login(username, password) {
   return res.json();
 }
 
+async function register(data) {
+  const res = await fetch(`${config.API_URL}/api/users/`, {
+    method: "POST",
+    body: JSON.stringify({
+      username: data?.username,
+      password: data?.password,
+      email: data?.email,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const dataRes = await res.json();
+  
+  if (!res.ok) {
+    let messageError = dataRes?.username?.join('.') ?? ""
+    messageError += dataRes?.password?.join('.') ?? ""
+    throw new Error(messageError)
+  }
+  
+  return dataRes
+}
+
 async function getInfo(token) {
   console.log(token)
   const res = await fetch(`${config.API_URL}/api/token/verify`, {
@@ -30,5 +54,6 @@ async function getInfo(token) {
 
 export {
   login,
-  getInfo
+  getInfo,
+  register
 }

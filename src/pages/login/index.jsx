@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import {Link as LinkWouter} from "wouter";
 
-import useLogin from "../hooks/useLogin.js";
+import useLogin from "./hooks/useLogin.js";
 
 function Login() {  
   const { isLoading, handleLogin, error } = useLogin()
