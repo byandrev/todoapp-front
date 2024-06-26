@@ -1,11 +1,11 @@
-import TaskList from "../components/TaskList"
+import TaskList from "../components/TaskList";
 
 function Home() {
   return (
-  <>
-    <TaskList></TaskList>
-  </>
-  )
+    <>
+      <TaskList></TaskList>
+    </>
+  );
 }
 
-export default Home
+export default Home;

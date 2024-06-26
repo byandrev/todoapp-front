@@ -1,6 +1,6 @@
 import { extendTheme } from '@chakra-ui/react'
 
-const override = {
+const overrides = {
   global: () => ({
     html: {
       scrollBehavior: 'smooth'
@@ -15,7 +15,7 @@ const override = {
 const config = {
   initialColorMode: 'light',
   useSystemColorMode: false,
-  styles: override
+  styles: overrides
 }
 
 const theme = extendTheme(config)
