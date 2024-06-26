@@ -1,6 +1,7 @@
 import { Route, Switch } from 'wouter'
 
 import HomePage from './pages/Home'
+import Profile from './pages/Profile'
 
 function App() {
 
@@ -8,6 +9,7 @@ function App() {
     <>
     <Switch>
     <Route component={HomePage} path='/'/>
+    <Route component={Profile} path='/profile'/>
     </Switch>
     </>
   )
