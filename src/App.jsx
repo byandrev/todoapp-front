@@ -1,14 +1,16 @@
 import { Route, Switch } from 'wouter'
 
 import HomePage from './pages/Home'
+import Header from "./components/Header.jsx";
 
 function App() {
 
   return (
     <>
-    <Switch>
-    <Route component={HomePage} path='/'/>
-    </Switch>
+      <Header />
+      <Switch>
+        <Route component={HomePage} path='/'/>
+      </Switch>
     </>
   )
 }
