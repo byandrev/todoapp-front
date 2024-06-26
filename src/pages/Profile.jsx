@@ -1,9 +1,12 @@
 import ProfileCard from "../components/ProfileCard";
+import { Center } from "@chakra-ui/react";
 
 function Profile() {
   return (
     <>
-      <ProfileCard></ProfileCard>
+      <Center p={"5%"}>
+        <ProfileCard></ProfileCard>
+      </Center>
     </>
   );
 }
