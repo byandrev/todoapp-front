@@ -1,3 +1,4 @@
+
 import config from "../config/index.js";
 
 async function login(username, password) {
@@ -40,7 +41,6 @@ async function register(data) {
 }
 
 async function getInfo(token) {
-  console.log(token)
   const res = await fetch(`${config.API_URL}/api/token/verify`, {
     method: "POST",
     headers: {
@@ -52,8 +52,44 @@ async function getInfo(token) {
   return res.json();
 }
 
+async function getUserInfo(token) {
+  const res = await fetch(`${config.API_URL}/api/user/`, {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+}
+
+async function update(token, data) {
+  const res = await fetch(`${config.API_URL}/api/users/${data.id}/update/`, {
+    method: "PATCH",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      first_name: data.first_name,
+      last_name: data.last_name,
+      photo: data.photo,
+      bio: data.bio,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to update user');
+  }
+
+  return await res.json();
+}
+
 export {
   login,
   getInfo,
-  register
+  register,
+  getUserInfo,
+  update,
 }
