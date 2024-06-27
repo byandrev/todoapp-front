@@ -6,14 +6,57 @@ import {
   ModalContent,
   ModalBody,
   ModalCloseButton,
+  Spinner,
 } from "@chakra-ui/react";
 import "@fontsource/raleway";
 import UpdateBio from "./UpdateBio";
 import UpdatePhoto from "./UpdatePhoto";
+import useUser from "../hooks/useUser";
+import { getUserInfo } from "../services/UserService";
+import React, { useState, useEffect } from "react";
 
 function ProfileCard() {
+  const { token } = useUser();
   const modalBio = useDisclosure();
   const modalPhoto = useDisclosure();
+
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (!token) {
+        setError("You must be logged in to see your profile");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const data = await getUserInfo(token);
+        if (data) {
+          setUserInfo(data);
+        } else {
+          setError("No user info found.");
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserInfo();
+  }, [token]);
+
+  if (loading) {
+    return <Spinner size="xl" />;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <>
       <Box
@@ -28,31 +71,21 @@ function ProfileCard() {
         p={8}
       >
         <Text fontWeight={"bold"} fontSize={"1.2rem"}>
-          John Doe
+          {userInfo.username}
         </Text>
         <Text paddingBottom={5} color={"gray.500"}>
-          johndoewp@ufps.edu.co
+          {userInfo.email}
         </Text>
         <Image
           padding={2}
           borderRadius="full"
           boxSize="150px"
-          src="https://bit.ly/dan-abramov"
+          src={userInfo.photo ? userInfo.photo : "src/assets/img/profile.png"}
         />
         <Text fontWeight={"bold"} fontSize={"1.1rem"} paddingY={5}>
           Biography
         </Text>
-        <Text>
-          John Doe is a digital marketing expert with over 15 years of
-          experience. He holds a Bachelor’s degree in Marketing from UC Berkeley
-          and an MBA from Stanford. John specializes in SEO, content marketing,
-          and social media strategy, working with high-profile clients to
-          enhance their online presence and drive growth. As the Director of
-          Marketing at XYZ Corp, he leads a team in creating innovative
-          campaigns that have resulted in a 30% increase in online sales.
-          Outside of work, John enjoys traveling, hiking, and volunteering with
-          local non-profits.
-        </Text>
+        <Text>{userInfo.bio ? userInfo.bio : "No biography available."}</Text>
         <Box
           paddingTop={7}
           w={"100%"}
@@ -61,7 +94,7 @@ function ProfileCard() {
           justifyContent={"space-around"}
         >
           <Text>Last login:</Text>
-          <Text>2024-09-01 09:48:20</Text>
+          <Text>{userInfo.lastLogin ? userInfo.lastLogin : "-"}</Text>
         </Box>
         <Stack
           direction="row"

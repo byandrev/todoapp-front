@@ -40,7 +40,6 @@ async function register(data) {
 }
 
 async function getInfo(token) {
-  console.log(token)
   const res = await fetch(`${config.API_URL}/api/token/verify`, {
     method: "POST",
     headers: {
@@ -52,8 +51,22 @@ async function getInfo(token) {
   return res.json();
 }
 
+async function getUserInfo(token) {
+  const res = await fetch(`${config.API_URL}/api/user/`, {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+}
+
 export {
   login,
   getInfo,
-  register
+  register,
+  getUserInfo,
 }
