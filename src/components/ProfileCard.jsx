@@ -9,16 +9,14 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import "@fontsource/raleway";
-import UpdateBio from "./UpdateBio";
-import UpdatePhoto from "./UpdatePhoto";
 import useUser from "../hooks/useUser";
 import { getUserInfo } from "../services/UserService";
 import React, { useState, useEffect } from "react";
+import UpdateProfile from "./UpdateProfile";
 
 function ProfileCard() {
   const { token } = useUser();
-  const modalBio = useDisclosure();
-  const modalPhoto = useDisclosure();
+  const modalUpdate = useDisclosure();
 
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -102,37 +100,25 @@ function ProfileCard() {
           align="center"
           paddingTop={7}
         >
-          <Button colorScheme="red" variant="solid" onClick={modalPhoto.onOpen}>
-            Update photo
-          </Button>
-          <Button colorScheme="red" variant="solid" onClick={modalBio.onOpen}>
-            Update bio
+          <Button
+            colorScheme="red"
+            variant="solid"
+            onClick={modalUpdate.onOpen}
+          >
+            Update profile
           </Button>
         </Stack>
       </Box>
       <Modal
-        isOpen={modalBio.isOpen}
-        onOpen={modalBio.onOpen}
-        onClose={modalBio.onClose}
+        isOpen={modalUpdate.isOpen}
+        onOpen={modalUpdate.onOpen}
+        onClose={modalUpdate.onClose}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
           <ModalBody>
-            <UpdateBio></UpdateBio>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-      <Modal
-        isOpen={modalPhoto.isOpen}
-        onOpen={modalPhoto.onOpen}
-        onClose={modalPhoto.onClose}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalBody>
-            <UpdatePhoto></UpdatePhoto>
+            <UpdateProfile></UpdateProfile>
           </ModalBody>
         </ModalContent>
       </Modal>
