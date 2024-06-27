@@ -14,18 +14,14 @@ const UserProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [loading, setLoading] = useState(false);
 
-  const login = async (username, password) => {
-    setLoading(true);
-    const data = await userService.login(username, password);
-
-    if (data.success) {
-      setToken(data.data.token);
-      setUser({ username, token: data.data.token });
-
-      localStorage.setItem("token", data.data.token);
-    }
+  const login = async (token) => {
+    setToken(token)
+    setUser({
+      username: '',
+      token
+    })
     
-    setLoading(false);
+    localStorage.setItem("token", token);
   };
 
   const logout = useCallback(() => {
