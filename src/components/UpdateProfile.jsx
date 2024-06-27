@@ -1,13 +1,28 @@
-import { Box, Text, Button, Input, Stack, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Button,
+  Input,
+  Stack,
+  Textarea,
+  Spinner,
+  Center,
+} from "@chakra-ui/react";
 import useUser from "../hooks/useUser";
-import { getUserInfo } from "../services/UserService";
+import { getUserInfo, update } from "../services/UserService";
 import React, { useState, useEffect } from "react";
 
-function UpdatePhoto() {
+function UpdateProfile() {
   const { token } = useUser();
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    photo: "",
+    bio: "",
+  });
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -21,6 +36,13 @@ function UpdatePhoto() {
         const data = await getUserInfo(token);
         if (data) {
           setUserInfo(data);
+          setFormData({
+            id: data.id,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            photo: data.photo,
+            bio: data.bio,
+          });
         } else {
           setError("No user info found.");
         }
@@ -33,6 +55,42 @@ function UpdatePhoto() {
 
     fetchUserInfo();
   }, [token]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const updatedUser = await update(token, formData);
+      setUserInfo(updatedUser);
+      setError(null);
+      window.location.reload();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Text>Loading...</Text>
+        <Spinner size="md" />
+      </>
+    );
+  }
+
+  if (error) {
+    return <Text>{error}</Text>;
+  }
+
   return (
     <Box h={"40rem"} w={"100%"} p={4}>
       <Stack
@@ -43,30 +101,51 @@ function UpdatePhoto() {
       >
         <Stack direction="column" justifyContent={"center"} align="left">
           <Text marginBottom={2}>First name</Text>
-          <Input defaultValue={userInfo.first_name}></Input>
+          <Input
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleInputChange}
+          ></Input>
         </Stack>
         <Stack direction="column" justifyContent={"center"} align="left">
           <Text marginBottom={2}>Last name</Text>
-          <Input defaultValue={userInfo.last_name}></Input>
+          <Input
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleInputChange}
+          ></Input>
         </Stack>
       </Stack>
 
       <Text>Photo</Text>
       <Input
+        name="photo"
         marginY={4}
         placeholder="Type the URL"
-        defaultValue={userInfo.photo}
+        value={formData.photo}
+        onChange={handleInputChange}
       ></Input>
       <Text>Bio</Text>
-      <Textarea resize={"none"} marginY={4} h={"50%"}></Textarea>
+      <Textarea
+        name="bio"
+        resize={"none"}
+        marginY={4}
+        h={"50%"}
+        value={formData.bio}
+        onChange={handleInputChange}
+      ></Textarea>
       <Stack
         direction="row"
         justifyContent={"center"}
         align="center"
         marginTop={2}
-        defaultValue={userInfo.bio}
       >
-        <Button colorScheme="red" variant="solid" w={"30%"}>
+        <Button
+          colorScheme="red"
+          variant="solid"
+          w={"30%"}
+          onClick={handleSubmit}
+        >
           Confirm
         </Button>
       </Stack>
@@ -74,4 +153,4 @@ function UpdatePhoto() {
   );
 }
 
-export default UpdatePhoto;
+export default UpdateProfile;

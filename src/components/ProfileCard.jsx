@@ -90,10 +90,7 @@ function ProfileCard() {
           display={"flex"}
           flexDirection={"row"}
           justifyContent={"space-around"}
-        >
-          <Text>Last login:</Text>
-          <Text>{userInfo.lastLogin ? userInfo.lastLogin : "-"}</Text>
-        </Box>
+        ></Box>
         <Stack
           direction="row"
           justifyContent={"flex-end"}
