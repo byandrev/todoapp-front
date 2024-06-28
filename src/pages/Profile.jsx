@@ -4,7 +4,7 @@ import { Center } from "@chakra-ui/react";
 function Profile() {
   return (
     <>
-      <Center p={"5%"}>{<ProfileCard></ProfileCard>}</Center>
+      <Center mt={'2rem'}>{<ProfileCard></ProfileCard>}</Center>
     </>
   );
 }
