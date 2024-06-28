@@ -58,8 +58,9 @@ function ProfileCard() {
   return (
     <>
       <Box
+        w={'90%'}
+        maxW={'sm'}
         bgColor={"white"}
-        w="30%"
         alignItems={"center"}
         textAlign={"justify"}
         display="flex"
