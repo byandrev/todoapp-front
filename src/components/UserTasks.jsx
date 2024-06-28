@@ -1,5 +1,5 @@
 import {
-  Flex, Button, useDisclosure, Input,
+  Flex, Button, useDisclosure, Input, Badge,
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
@@ -18,9 +18,10 @@ import { useQuery } from "react-query";
 import useUser from "../hooks/useUser";
 import { getTasks, updateTaskStatus, deleteTask, editTask } from "../services/TasksService";
 import { MdOutlineDeleteOutline, MdOutlineEdit } from "react-icons/md";
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const UserTasks = () => {
+  const [sortedTasks, setSortedTasks] = useState([]);
   const { token, loading } = useUser();
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
   const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure();
@@ -36,6 +37,13 @@ const UserTasks = () => {
       enabled: !!token,
     }
   );
+
+  useEffect(() => {
+    if (data) {
+      const sorted = [...data.results].sort((a, b) => a.priority - b.priority);
+      setSortedTasks(sorted);
+    }
+  }, [data]);
 
   const handleCompleteTask = async (taskId, taskName, newStatus) => {
     try {
@@ -80,11 +88,11 @@ const UserTasks = () => {
 
   return (
     <div>
-      <h1>Tus tareas pendientes:</h1>
+      <h1>Lista de tus tareas ordenadas por <Badge colorScheme='red'>PRIORIDAD</Badge>:</h1>
       <div
         style={{ display: "flex", flexWrap: "wrap", flexDirection: "column" }}
       >
-        {data.results.map((task, index) => (
+        {sortedTasks.map((task, index) => (
           <Flex
             key={index}
             style={{
@@ -97,7 +105,9 @@ const UserTasks = () => {
               justifyContent: "space-between",
               gap: "1rem",
             }}
-          >
+          > 
+            <Flex gap='4' alignItems='center'>
+            <Badge colorScheme='red' width='1rem' overflow='hidden'>{task.priority}</Badge>
             {task.status === "Pending" && (
               <Button
                 onClick={() => handleCompleteTask(task.id, task.name, "Completed")}
@@ -117,7 +127,8 @@ const UserTasks = () => {
                 backgroundColor='green'
               ></Button>
             )}
-            <div>{task.name}</div>
+            </Flex>
+            <Flex width='10rem' overflow='hidden'>{task.name}</Flex>
             <Flex gap={2} alignItems="center">
               <Button colorScheme="none" p={0} onClick={() => {
                 setSelectedTask(task)
