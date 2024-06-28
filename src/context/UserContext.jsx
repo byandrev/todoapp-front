@@ -46,6 +46,7 @@ const UserProvider = ({ children }) => {
           setUser({ username: isLogged.name, token: tokenInLocalStorage });
         } else {
           setUser(null);
+          localStorage.removeItem("token");
         }
 
         setLoading(false);

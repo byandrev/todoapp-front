@@ -58,15 +58,16 @@ function ProfileCard() {
   return (
     <>
       <Box
+        py={4}
+        w={'90%'}
+        maxW={'sm'}
         bgColor={"white"}
-        w="30%"
         alignItems={"center"}
         textAlign={"justify"}
         display="flex"
         flexDirection="column"
         borderRadius={"md"}
         border={"1px solid #e2e8f0"}
-        p={8}
       >
         <Text fontWeight={"bold"} fontSize={"1.2rem"}>
           {userInfo.username}
