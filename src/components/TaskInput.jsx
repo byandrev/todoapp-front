@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Input,
   Flex,
@@ -8,14 +10,46 @@ import {
 
 import { IoAdd } from "react-icons/io5";
 
+import useUser from "../hooks/useUser";
+import { useQuery } from "react-query";
+import { getTasks, createTask } from "../services/TasksService";
+
 function TaskInput() {
+  const [value, setValue] = useState("");
+  const handleChange = (event) => setValue(event.target.value);
+  const { token } = useUser();
+  
+  const handleNewTask = async () => {
+    if(!value) return
+    try {
+      await createTask(token, value);
+      refetch();
+    } catch (error) {
+      console.error("Error al crear la tarea:", error);
+    }
+  };
+
+  const { refetch } = useQuery(["tasks", token], () => getTasks(token), {
+    enabled: !!token,
+  });
   return (
     <>
-      <Flex alignItems='center' justifyContent='center'>
+      <Flex alignItems="center" justifyContent="center">
         <InputGroup size="md">
-          <Input pr="4.5rem" placeholder="Ingresa una nueva tarea" backgroundColor='rgba(190, 190, 190, 0.23)'></Input>
+          <Input
+            value={value}
+            onChange={handleChange}
+            pr="4.5rem"
+            placeholder="Ingresa una nueva tarea"
+            backgroundColor="rgba(190, 190, 190, 0.23)"
+          ></Input>
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" backgroundColor='transparent'>
+            <Button
+              h="1.75rem"
+              size="sm"
+              backgroundColor="transparent"
+              onClick={handleNewTask}
+            >
               <IoAdd />
             </Button>
           </InputRightElement>
@@ -26,16 +60,3 @@ function TaskInput() {
 }
 
 export default TaskInput;
-
-{
-  /*
-  <Input variant="filled" placeholder="Escribe tu nueva tarea">
-          <IconButton
-            backgroundColor="#cf2b1f"
-            aria-label="Call Segun"
-            size="md"
-            icon={<IoAdd size="50%" />}
-          />
-        </Input>
-  */
-}

@@ -1,4 +1,4 @@
-import Task from "./Task"
+import UserTasks from "./UserTasks"
 import TaskInput from "./TaskInput"
 import UserCard from "./UserCard"
 
@@ -11,13 +11,12 @@ function TaskList() {
         <UserCard></UserCard>
         <TaskInput/>
         <Stack spacing={4} direction="column" align="center">
-          <Task></Task>
-          <Task></Task>
-          <Task></Task>
+          <UserTasks/>
         </Stack>
       </Flex>
     </>
   );
 }
 
-export default TaskList;
+export default TaskList
+
