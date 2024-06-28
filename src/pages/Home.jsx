@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 
-import MainTitle from "../components/MainTitle";
-import TaskList from "../components/TaskList";
+import MainTitle from "../components/MainTitle"
+import TaskList from "../components/TaskList"
 
 import { LuUserCircle } from "react-icons/lu";
 

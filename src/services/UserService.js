@@ -40,7 +40,6 @@ async function register(data) {
 }
 
 async function getInfo(token) {
-  console.log(token)
   const res = await fetch(`${config.API_URL}/api/token/verify`, {
     method: "POST",
     headers: {

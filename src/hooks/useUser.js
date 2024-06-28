@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 
 function useUser() {
-  const { user, token, loading, login, logout } = useContext(UserContext);
+  const { user, token, loading, login, logout } = useContext(UserContext)
 
   return {
     user,
@@ -13,4 +13,5 @@ function useUser() {
   };
 }
 
-export default useUser;
+export default useUser
+
