@@ -6,7 +6,7 @@ function Header() {
   const { user, loading, logout } = useUser()
   
   return (
-    <Flex maxW={'1000px'} mx={'auto'} justifyContent={'space-between'} alignItems={'center'}>
+    <Flex maxW={'1000px'} px={4} mx={'auto'} justifyContent={'space-between'} alignItems={'center'}>
       <Heading size={'md'} py={4}>TodoApp</Heading>
       
       <Flex gap={4}>
