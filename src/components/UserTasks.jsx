@@ -40,7 +40,7 @@ const UserTasks = () => {
 
   useEffect(() => {
     if (data) {
-      const sorted = [...data.results].sort((a, b) => a.priority - b.priority);
+      const sorted = [...data.results]?.sort((a, b) => a.priority - b.priority);
       setSortedTasks(sorted);
     }
   }, [data]);
@@ -92,7 +92,7 @@ const UserTasks = () => {
       <div
         style={{ display: "flex", flexWrap: "wrap", flexDirection: "column" }}
       >
-        {sortedTasks.map((task, index) => (
+        {sortedTasks?.map((task, index) => (
           <Flex
             key={index}
             style={{
